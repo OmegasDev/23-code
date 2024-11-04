@@ -1,12 +1,14 @@
 "use client";
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { CodeSnippet, fetchSnippetById } from '../../../lib/fetchSnippets';
 import { useRouter } from 'next/navigation';
 import Spinner from '../../../components/Spinner';
 import MainNavbar from '@/components/Navbar';
+import Image from 'next/image';
+
 
 interface SnippetDetailProps {
   params: Promise<{ id: string }>;
@@ -20,9 +22,9 @@ const SnippetDetail: React.FC<SnippetDetailProps> = ({ params }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
 
-  const loadSnippet = async () => {
+  const loadSnippet = useCallback(async () => {
     try {
-      const { id } = await params;
+      const { id } = await params; // Ensure `params` is available
       if (id) {
         setLoading(true); // Start loading
         const data = await fetchSnippetById(id);
@@ -34,11 +36,12 @@ const SnippetDetail: React.FC<SnippetDetailProps> = ({ params }) => {
       console.error("Error fetching snippet:", error);
       setLoading(false);
     }
-  };
+  }, [params]); 
+  
 
   useEffect(() => {
     loadSnippet();
-  }, [params]);
+  }, [params,loadSnippet]);
 
   const copyToClipboard = () => {
     if (snippet?.code) {
@@ -113,12 +116,16 @@ const SnippetDetail: React.FC<SnippetDetailProps> = ({ params }) => {
         <div className="lg:flex lg:items-start lg:gap-6">
           {/* Image Section */}
           {snippet.imageUrl && (
-            <div className="lg:w-1/2 mb-4 lg:mb-0">
-              <img
-                src={snippet.imageUrl}
-                alt="Screenshot"
-                className="rounded-lg object-cover md:my-10 w-full h-auto max-h-60" />
-            </div>
+           <div className="lg:w-1/2 mb-4 lg:mb-0">
+           <Image
+             src={snippet.imageUrl}
+             alt="Screenshot"
+             className="rounded-lg object-cover md:my-10 w-full h-auto max-h-60"
+             width={500} 
+             height={300} 
+           />
+         </div>
+         
           )}
 
           {/* Content Section */}

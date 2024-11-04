@@ -1,5 +1,7 @@
 "use client"
 import React from 'react';
+import Image from 'next/image';
+
 
 interface MainNavbarProps {
   searchTerm: string;
@@ -16,7 +18,14 @@ const MainNavbar: React.FC<MainNavbarProps> = ({
 }) => (
   <nav>
     <div className="bg-dark-blue pr-1 flex items-center h-full">
-      <img src="/yt-profile.png" alt="YouTube Profile Logo" className="h-20 w-auto md:h-40" />
+    <Image
+  src="/yt-profile.png"
+  alt="YouTube Profile Logo"
+  className="h-20 w-auto md:h-40"
+  width={80} // Adjust width based on the image dimensions you need
+  height={80} // Adjust height based on the image dimensions you need
+  />
+
       <div className="hidden md:flex items-center mr-10 ml-20">
         <span className="mr-2 text-gray-500">Menu</span>
         <span className="text-gray-500">▼</span>
@@ -24,7 +33,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({
       <div className="md:hidden text-gray-500">
         <span>▼</span>
       </div>
-      
+
       <div className="mb-4 flex space-x-4">
         <input
           type="text"

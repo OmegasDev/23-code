@@ -7,7 +7,9 @@ import { fetchSnippets, CodeSnippet } from '../lib/fetchSnippets';
 import MainNavbar from './Navbar';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import Spinner from './Spinner'; // Import the Spinner component
+import Spinner from './Spinner'; 
+import Image from 'next/image';
+
 
 const Snippets: React.FC = () => {
   const router = useRouter();
@@ -80,7 +82,14 @@ const Snippets: React.FC = () => {
             {currentSnippets.map((snippet) => (
               <div key={snippet._id} className="p-4 bg-dark-blue-card rounded-lg shadow-lg">
                 {snippet.imageUrl && (
-                  <img src={snippet.imageUrl} alt="Screenshot" className="mb-2 rounded" />
+                  <Image
+                  src={snippet.imageUrl}
+                  alt="Screenshot"
+                  className="mb-2 rounded"
+                  width={400} // Adjust width as appropriate
+                  height={300} // Adjust height as appropriate
+                />
+                
                 )}
                 <h2 className="text-xl text-gray-400 font-semibold mb-2">{snippet.title}</h2>
                 <p className="text-gray-300 mb-4">{snippet.description}</p>

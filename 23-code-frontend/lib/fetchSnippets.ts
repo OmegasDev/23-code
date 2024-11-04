@@ -3,8 +3,8 @@
 import sanityClient from './sanityClient';
 
 export interface CodeSnippet {
-  usage: any;
-  slug: any;
+  usage: string;
+  slug: string;
   _id: string;
   title: string;
   code: string;
